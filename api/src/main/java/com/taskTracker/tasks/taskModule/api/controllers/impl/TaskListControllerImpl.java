@@ -6,7 +6,6 @@ import com.taskTracker.tasks.taskModule.api.dtos.TaskListDTO;
 import com.taskTracker.tasks.taskModule.application.converters.TaskListMapper;
 import com.taskTracker.tasks.taskModule.application.useCases.CreateTaskLIstUseCase;
 import com.taskTracker.tasks.taskModule.application.useCases.GetTaskListListUseCase;
-import com.taskTracker.tasks.taskModule.application.useCases.GetTaskListUseCase;
 import com.taskTracker.tasks.taskModule.domain.exception.TaskListNotFoundExecption;
 import com.taskTracker.tasks.taskModule.infrastructure.entities.TaskListEntity;
 import lombok.AllArgsConstructor;
@@ -19,29 +18,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 @AllArgsConstructor
-@RestController
+@RestController("/api")
 public class TaskListControllerImpl implements TaskListController {
 
     private final TaskListMapper taskListMapper;
     private final GetTaskListListUseCase getTaskListListUseCase;
     private final CreateTaskLIstUseCase createTaskLIstUseCase;
-    private final GetTaskListUseCase  getTaskListUseCase;
-
-    @Override
-    @GetMapping("/task-lists/{id}")
-    public ResponseEntity<ApiResponse<TaskListDTO>> getTaskList(@PathVariable UUID id) throws Exception {
-            Optional<TaskListEntity> result = getTaskListUseCase.execute(id);
-            result.orElseThrow(() -> new TaskListNotFoundExecption("Task not found: id"));
-            TaskListDTO taskListDTO = taskListMapper.toDTO(result.get());
-
-            ApiResponse<TaskListDTO> response = new ApiResponse<>(
-                    "SUCCESS", HttpStatus.OK, "Created", taskListDTO
-            );
-            return new ResponseEntity<>(
-                    response,
-                    response.getCode()
-            );
-    }
 
     @Override
     @GetMapping("/task-lists")

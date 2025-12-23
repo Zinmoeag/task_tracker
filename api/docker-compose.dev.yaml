@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: task_dev
+    environment:
+      POSTGRES_DB: task_dev
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: changemeinprod!
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+      - ./prisma:/docker-entrypoint-initdb.d
+    networks:
+      - task-tracker
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  prisma-studio:
+    image: node:18-alpine
+    container_name: task-tracker-prisma-studio
+    working_dir: /app
+    command: sh -c "npm install -g prisma && prisma studio --port 5555"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres123@localhost:5432/task_dev
+    ports:
+      - '5555:5555'
+    volumes:
+      - .:/app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - task-tracker
+
+volumes:
+  postgres_data_dev:
+
+networks:
+  task-tracker:
+    driver: bridge

@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface TaskListController {
 
-    ResponseEntity<ApiResponse<TaskListDTO>> getTaskList(UUID id) throws Exception;
+//    ResponseEntity<ApiResponse<TaskListDTO>> getTaskList(UUID id) throws Exception;
     ResponseEntity<ApiResponse<List<TaskListDTO>>> getTaskListLists(UUID taskListId);
     ResponseEntity<ApiResponse<TaskListDTO>> createTaskList(TaskListDTO taskListDTO);
 }
