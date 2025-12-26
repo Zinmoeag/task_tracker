@@ -2,6 +2,8 @@ package com.taskTracker.tasks.core.exceptions;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+
 @Getter
 public class BusinessException extends RuntimeException {
 

@@ -1,7 +1,9 @@
 package com.taskTracker.tasks.core.response;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 
+//@Component
 public class ApiResponse<T> {
     private String status;
     private HttpStatus code;

@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 import static jakarta.persistence.GenerationType.UUID;
 
@@ -28,7 +29,7 @@ public class UserEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = UUID)
-    private String id;
+    private UUID id;
     @Column(name = "first_name", nullable = false)
     private String firstName;
     @Column(name = "last_name", nullable = false)

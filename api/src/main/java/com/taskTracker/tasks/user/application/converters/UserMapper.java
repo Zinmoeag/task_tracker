@@ -1,5 +1,6 @@
 package com.taskTracker.tasks.user.application.converters;
 
+import com.taskTracker.tasks.user.api.dtos.UserDTO;
 import com.taskTracker.tasks.user.api.requests.ProfileUpdateRequest;
 import com.taskTracker.tasks.user.entities.UserEntity;
 import io.micrometer.common.util.StringUtils;
@@ -22,5 +23,24 @@ public class UserMapper {
                 .equals(user.getDateOfBirth())) {
             user.setDateOfBirth(request.getDateOfBirth());
         }
+    }
+
+    public UserDTO toDTO(final UserEntity user) {
+        return UserDTO.builder()
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
+                .dateOfBirth(user.getDateOfBirth())
+                .enabled(user.isEnabled())
+                .locked(user.isLocked())
+                .credentialsExpired(user.isCredentialsExpired())
+                .emailVerified(user.isEmailVerified())
+                .profilePictureUrl(user.getProfilePictureUrl())
+                .phoneVerified(user.isPhoneVerified())
+                .createdDate(user.getCreatedDate())
+                .lastModifiedDate(user.getLastModifiedDate())
+                .build();
     }
 }

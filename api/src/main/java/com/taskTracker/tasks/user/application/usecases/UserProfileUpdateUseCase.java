@@ -1,5 +1,6 @@
 package com.taskTracker.tasks.user.application.usecases;
 
+import com.taskTracker.tasks.core.exceptions.BusinessException;
 import com.taskTracker.tasks.user.api.requests.ProfileUpdateRequest;
 import com.taskTracker.tasks.user.application.services.UserService;
 import com.taskTracker.tasks.user.entities.UserEntity;
@@ -13,7 +14,7 @@ import java.util.UUID;
 public class UserProfileUpdateUseCase {
 
     private final UserService userService;
-    public void execute(ProfileUpdateRequest request, UUID userId) {
+    public void execute(ProfileUpdateRequest request, UUID userId) throws BusinessException {
         this.userService.updateProfileInfo(request, userId);
     };
 }
