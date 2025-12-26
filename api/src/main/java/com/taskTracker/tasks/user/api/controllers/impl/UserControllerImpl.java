@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -30,7 +31,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @PatchMapping("/api/me/{userId}")
-    public ResponseEntity<ApiResponse> updateUserProfile(@RequestBody ProfileUpdateRequest request,@PathVariable UUID userId) throws BusinessException {
+    public ResponseEntity<ApiResponse> updateUserProfile(@RequestBody ProfileUpdateRequest request,@PathVariable UUID userId) throws BusinessException, Exception {
         System.out.println(userId.toString());
         this.userProfileUpdateUseCase.execute(request, userId);
         return new ResponseEntity("success", HttpStatus.OK);

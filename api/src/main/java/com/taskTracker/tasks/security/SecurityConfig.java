@@ -1,10 +1,11 @@
 package com.taskTracker.tasks.security;
 
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,15 +21,14 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 public class SecurityConfig {
     private static final String[] PUBLIC_URLS = {
-            "/api/**",
+            "/api/auth/**",
     };
 
-    private JwtFilter jwtFilter;
-
-    SecurityConfig(JwtFilter jwtFilter) {}
+    private final JwtFilter jwtFilter;
 
     @Bean
     public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
+        System.out.println("JwtFilter" + this.jwtFilter);
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
@@ -36,7 +36,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(STATELESS))
-//                .addFilterBefore(this.jwtFilter, UsernamePasswordAuthenticationFilter.class)
+               .addFilterBefore(this.jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 }

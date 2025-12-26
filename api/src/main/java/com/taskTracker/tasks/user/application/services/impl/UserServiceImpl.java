@@ -9,10 +9,12 @@ import com.taskTracker.tasks.user.application.converters.UserMapper;
 import com.taskTracker.tasks.user.application.port.UserRespository;
 import com.taskTracker.tasks.user.application.services.UserService;
 import com.taskTracker.tasks.user.entities.UserEntity;
+
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -28,6 +30,7 @@ public class UserServiceImpl implements UserService {
     public final PasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
         return this.userRepository.findByEmailIgnoreCase(email)
                 .orElseThrow(() -> new BusinessException(USER_NOT_FOUND));

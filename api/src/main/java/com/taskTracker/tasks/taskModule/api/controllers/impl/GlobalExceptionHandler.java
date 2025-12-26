@@ -21,14 +21,14 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, status);
     }
     
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<ApiResponse> handleException(Exception ex, WebRequest request) {
-//        System.out.println("Exception");
-//        ApiResponse response = new ApiResponse(
-//                "FAILED", HttpStatus.BAD_REQUEST, ex.getMessage()
-//        );
-//        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-//    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiResponse> handleException(Exception ex, WebRequest request) {
+        System.out.println("Exception");
+        ApiResponse response = new ApiResponse(
+                "FAILED", HttpStatus.BAD_REQUEST, ex.getMessage()
+        );
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(TaskListNotFoundExecption.class)
     public ResponseEntity<ApiResponse> handleException(TaskListNotFoundExecption ex, WebRequest request) {

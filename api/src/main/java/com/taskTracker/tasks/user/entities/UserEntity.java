@@ -56,10 +56,12 @@ public class UserEntity implements UserDetails {
     private boolean phoneVerified;
     @CreatedDate
     @Column(name = "created_at", updatable = false, nullable = false)
-    private LocalDateTime createdDate;
+    @Builder.Default
+    private LocalDateTime createdDate = LocalDateTime.now();
     @LastModifiedDate
     @Column(name = "last_modified_date", insertable = false)
-    private LocalDateTime lastModifiedDate;
+    @Builder.Default
+    private LocalDateTime lastModifiedDate = LocalDateTime.now();
 
 
     @ManyToMany(
@@ -84,11 +86,11 @@ public class UserEntity implements UserDetails {
 
     @Override
     public @Nullable String getPassword() {
-        return "";
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return this.email;
     }
 }
